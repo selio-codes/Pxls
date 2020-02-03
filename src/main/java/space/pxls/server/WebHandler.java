@@ -977,7 +977,9 @@ public class WebHandler {
                 return;
             }
 
-            if (identifier != null) {
+            if (identifier.equals("auth_invalid")) {
+                redirect(exchange, "/?auth_invalid=true");
+            } else if (identifier != null) {
                 String login = id + ":" + identifier;
                 User user = App.getUserManager().getByLogin(login);
                 // If there is no user with that identifier, we make a signup token and tell the client to sign up with that token
