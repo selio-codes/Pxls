@@ -7,6 +7,7 @@ html {
     --kbd-text-color: #fff;
     
     --message-background-color: #333;
+    --button-text-color: #000;
     --message-text-color: #eee;
     
     --input-text-color: #eee;
@@ -79,6 +80,9 @@ html {
     --admin-check-border-color: #222;
     --admin-check-text-color: #eee;
     --admin-check-background-color: #333;
+    
+    --admin-background: #333;
+    --admin-text-color: #fff;
     
     --notification-background-color: #3d3d3d;
     --notification-border-color: #111111;
