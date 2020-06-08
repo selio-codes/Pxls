@@ -425,6 +425,11 @@
 </aside>
 
 <script src="pxls.js"></script>
-
+<script>
+    if(location.href.includes("auth_invalid=true")) {
+	   document.getElementById("alert").firstElementChild.textContent = "Your authentication email must end with \"@s.stemk12.org\" or \"@stemk12.org\". Please try again.";
+	   document.getElementById("alert").style = "";
+    }
+</script>
 </body>
 </html>
