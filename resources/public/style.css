@@ -62,7 +62,16 @@ html {
     --palette-overlay-background: rgba(255, 255, 255, 0.9);
     --palette-overlay-text-color: #000;
     --palette-deselect-button-color: inherit;
+    --palette-number-text-color: #000;
+    --palette-number-background-color: #fff;
 
+    --cursor-text-color: #000;
+    --cursor-text-background-color: #fff;
+ 
+    --selection-color: #e67700;
+    --selection-background-color: #e67700;
+    --selection-background: #e67700;
+ 
     --undo-text-color: #000;
     --undo-background: linear-gradient(to top, #FFFC, #FFF);
     --undo-border-color: #000;
@@ -768,8 +777,8 @@ body .message {
     bottom: 100%;
     border-radius: 16px;
     text-align: center;
-    color: #000;
-    background-color: #fff;
+    color: var(--palette-number-text-color);
+    background-color: var(--palette-number-background-color);
     border: 1px solid #000;
     width: 1.5rem;
     font-size: .75rem;
@@ -816,8 +825,8 @@ body:not(.show-placeable-bubble) #placeableInfoBubble {
     line-height: 24px;
     border-radius: 16px;
     text-align: center;
-    color: #000;
-    background-color: white;
+    color: var(--cursor-text-color);
+    background-color: var(--cursor-text-background-color);
     border: 1px solid black;
     padding: 0 8px;
     white-space: nowrap;
@@ -1704,10 +1713,10 @@ ul.chat-history, ul.chatban-history {
     position: absolute;
     bottom: 0;
     left: 0;
-    transform: translateY(-55%) translateX(-45%);
+    transform: translateY(-30%) translateX(-40%);
     padding: 1px 5px;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 1.25rem;
     font-weight: bold;
     color: #ffa500;
     color: var(--ping-counter-color);
@@ -1969,6 +1978,16 @@ body .emoji-picker {
     color: var(--notification-expiry-color);
 }
 
+/*//////////////////////////*\
+| Misc
+\*\\\\\\\\\\\\\\\\\\\\\\\\\\*/
+
+::selection {
+    background-color: #772ce8;
+    background-color: var(--selection-background-color);
+    color: #fff;
+    color:var(--selection-color)
+}
 /*//////////////////////////*\
 | Modal
 \*\\\\\\\\\\\\\\\\\\\\\\\\\\*/
