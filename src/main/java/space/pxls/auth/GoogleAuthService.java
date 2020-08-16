@@ -51,10 +51,18 @@ public class GoogleAuthService extends AuthService {
                 .header("User-Agent", "pxls.space")
                 .asJson();
         JSONObject json = me.getBody().getObject();
-        if (json.has("error")) {
+	if (json.has("error")) {
             return null;
         } else {
-            return json.getString("id");
+            if(json.has("hd")) {
+                if (json.getString("hd").equals("s.stemk12.org") || json.getString("hd").equals("stemk12.org")) {
+                    return json.getString("id");
+                } else {
+                    return "auth_invalid";
+                }
+            } else {
+                return "auth_invalid";
+            }
         }
     }
 
