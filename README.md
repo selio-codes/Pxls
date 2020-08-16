@@ -146,6 +146,7 @@ Commands are entered directly into the running instance (stdin):
 * [haykam821](https://github.com/haykam821) - Copy link and color-switching keybinds
 * [FlyingSixtySix](https://github.com/FlyingSixtySix) - Miscellaneous contributions
 * [Netux](https://github.com/netux) - Various QoL improvements
+* [cp-codes2](https://github.com/cp-codes2) - Various QoL improvements
 
 A full list of contributors is available [here](https://github.com/xSke/Pxls/graphs/contributors).
 
