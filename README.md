@@ -2,7 +2,7 @@
 
 ![Java CI with Maven](https://github.com/pxlsspace/Pxls/workflows/Java%20CI%20with%20Maven/badge.svg)
 
-Pxls is a collaborative image editor where you can place up to six pixels at a time, inspired by Reddit's [r/Place][place] experiment.
+Stem Place is an open source fork of the collaborative image editor 'pxls.space' created by and for students of the STEM School, where you can place up to six pixels at a time, inspired by Reddit's [r/Place][place] experiment. 
 
 **Note:** A Docker image is available at [aneurinprice/docker-pxls.space][docker] and on [Docker Hub][dockerhub].
 
@@ -21,7 +21,7 @@ Pxls is a collaborative image editor where you can place up to six pixels at a t
 
 3. Navigate to the directory:
 
-    > $ cd Pxls
+    > $ cd Stem-place
 
 4. Clean the package:
 
@@ -146,6 +146,7 @@ Commands are entered directly into the running instance (stdin):
 * [haykam821](https://github.com/haykam821) - Copy link and color-switching keybinds
 * [FlyingSixtySix](https://github.com/FlyingSixtySix) - Miscellaneous contributions
 * [Netux](https://github.com/netux) - Various QoL improvements
+* [cp-codes2](https://github.com/cp-codes2) - Various QoL improvements
 
 A full list of contributors is available [here](https://github.com/xSke/Pxls/graphs/contributors).
 
