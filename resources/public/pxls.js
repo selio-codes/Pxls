@@ -1893,6 +1893,12 @@ window.App = (function() {
       }
     };
   })();
+  if(location.href.includes("auth_invalid=true")) {
+    modal.show(modal.buildDom(
+      crel('h2', { class: 'modal-title' }, 'Error'),
+      crel('p', { style: 'padding: 0; margin: 0;' }, "Your authentication email must end with \"@s.stemk12.org\" or \"@stemk12.org\". Please try again.")
+    ), { closeExisting: false });
+  }
   const overlays = (function() {
     const overlay = function(name, fetchData, onLazyInit = () => {}) {
       const self = {
