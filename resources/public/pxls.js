@@ -3754,13 +3754,13 @@ window.App = (function() {
       }
     };
 
-    if(location.href.includes("auth_invalid=true")) {
+    if (location.href.includes('auth_invalid=true')) {
       modal.show(modal.buildDom(
         crel('h2', { class: 'modal-title' }, 'Error'),
-        crel('p', { style: 'padding: 0; margin: 0;' }, "Your authentication email must end with \"@s.stemk12.org\" or \"@stemk12.org\". Please try again.")
+        crel('p', { style: 'padding: 0; margin: 0;' }, 'Your authentication email must end with \"@s.stemk12.org\" or \"@stemk12.org\". Please try again.')
       ), { closeExisting: false });
     }
-    
+
     return {
       init: self.init,
       updateTimer: self.updateTimer,
