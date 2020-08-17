@@ -3316,7 +3316,7 @@ window.App = (function() {
         self._initMultiTabDetection();
 
         self.elements.coords.click(() => coords.copyCoords(true));
-        
+
         if (location.href.includes('auth_invalid=true')) {
           modal.show(modal.buildDom(
             crel('h2', { class: 'modal-title' }, 'Error'),
