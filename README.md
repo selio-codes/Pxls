@@ -21,7 +21,7 @@ Stem Place is an open source fork of the collaborative image editor 'pxls.space'
 
 3. Navigate to the directory:
 
-    > $ cd Stem-place
+    > $ cd StemPlace
 
 4. Clean the package:
 
