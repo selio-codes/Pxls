@@ -17,7 +17,7 @@ Stem Place is an open source fork of the collaborative image editor 'pxls.space'
 1. Install the above requirements either via package manager (recommended) or by building from their sources.
 2. Clone the repo:
 
-    > $ git clone git@github.com:pxlsspace/Pxls.git
+    > $ git clone git@github.com:Mikarific/Pxls.git
 
 3. Navigate to the directory:
 
@@ -145,6 +145,7 @@ Commands are entered directly into the running instance (stdin):
 * [GlowingSocc](https://github.com/GlowingSocc) - Loads of client improvements
 * [haykam821](https://github.com/haykam821) - Copy link and color-switching keybinds
 * [FlyingSixtySix](https://github.com/FlyingSixtySix) - Miscellaneous contributions
+* [Mikarific](https://github.com/Mikarific) - Email based whitelisting
 * [Netux](https://github.com/netux) - Various QoL improvements
 * [cp-codes2](https://github.com/cp-codes2) - Various QoL improvements
 
