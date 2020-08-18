@@ -6493,7 +6493,7 @@ window.App = (function() {
                     crel(toRet, crel('span', { style: 'font-style: italic; font-size: .75em; font-weight: bold; color: red; margin-left: .5em' }, 'New Accounts Disabled'));
                   }
                   return toRet;
-                })
+                }),
                 crel('li', crel('a', { href: '/defaultAuth' }, 'Alternate Login'))
               ),
             ),
