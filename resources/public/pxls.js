@@ -3253,7 +3253,7 @@ window.App = (function() {
       banner: {
         HTMLs: [
           crel('span', crel('i', { class: 'fab fa-discord fa-is-left' }), ' Official Discord: ', crel('a', {
-            href: 'https://pxls.space/discord',
+            href: 'https://discord.gg/HVAR9sb',
             target: '_blank'
           }, 'Invite Link')).outerHTML,
           crel('span', { style: '' }, crel('i', { class: 'fas fa-gavel fa-is-left' }), 'Read the chat rules in the info panel.').outerHTML,
