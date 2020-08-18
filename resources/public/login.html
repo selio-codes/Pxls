@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>
+            Log In with Normal Credentials
+        </title>
+        <style>
+            div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+            }
+            form {
+                border: 1px solid gray;
+                background-color: #eeeeee;
+                border-radius: 20px;
+                padding: 30px;
+                box-shadow: 0 0 20px;
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <form action="#" method="get">
+                <h1>
+                    Alternate Login
+                </h1>
+                <em>This only works if you have a specially set up account</em>
+                <p>{{INFO}}</p>
+                <table>
+                    <thead></thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label for="username">Username</label>
+                            </td>
+                            <td>
+                                <input type="text" name="username">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="password">Password</label>
+                            </td>
+                            <td>
+                                <input type="password" name="password">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+    </body>
+</html>
