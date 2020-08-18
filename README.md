@@ -148,6 +148,7 @@ Commands are entered directly into the running instance (stdin):
 * [Mikarific](https://github.com/Mikarific) - Email based whitelisting
 * [Netux](https://github.com/netux) - Various QoL improvements
 * [cp-codes2](https://github.com/cp-codes2) - Various QoL improvements
+* [DrYamok](https://github.com/RonanFinley) - Username/Password based Authentication
 
 A full list of contributors is available [here](https://github.com/xSke/Pxls/graphs/contributors).
 
