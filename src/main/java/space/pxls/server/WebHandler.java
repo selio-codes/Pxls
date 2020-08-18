@@ -30,6 +30,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import at.favre.lib.crypto.bcrypt.*;
+import at.favre.lib.crypto.bcrypt.BCrypt.Result;
+
 public class WebHandler {
     private PebbleEngine engine;
     private Map<String, AuthService> services = new ConcurrentHashMap<>();
@@ -1641,6 +1644,47 @@ public class WebHandler {
         } else {
             respond(exchange, StatusCodes.BAD_REQUEST, new Error("bad_service", "No auth method named " + id));
         }
+    }
+
+    public void signInDefault(HttpServerExchange exchange) {
+        String error = "";
+        Map<String, Deque<String>> params = exchange.getQueryParameters();
+        if(params.containsKey("username")) {
+            String username = params.get("username").peek();
+
+            User user = App.getUserManager().getByName(username);
+            if (user != null) {
+                String login = user.getLogin();
+                if(login.substring(0,5).equals("hash:") && BCrypt.verifyer().verify(params.get("password").peek().toCharArray(), login.substring(5).toCharArray()).verified) {
+                    //System.out.println("Verified");
+                    String ip = exchange.getAttachment(IPReader.IP);
+                    String loginToken = App.getUserManager().logIn(user, ip);
+                    setAuthCookie(exchange, loginToken, 24);
+                    respond(exchange, StatusCodes.OK, new AuthResponse(loginToken, false));
+                    return;
+                } else {
+                    if(login.substring(0,5).equals("hash:")) {
+                        error = "Incorrect Password";
+                    } else {
+                        error = "Account does not qualify for Alternative Login";
+                    }
+                }
+            } else {
+                error = "Incorrect Username";
+            }
+        }
+        String path = App.getStorageDir().resolve("resources/public/login.html").toString();
+        File login = new File(path);
+        exchange.getResponseHeaders().put(Headers.CONTENT_TYPE, "text/html");
+        String data = fileToString(login);
+        data = data.replace("{{INFO}}", error);
+        exchange.getResponseSender().send(data);
+    }
+
+    public void gimmeHash(HttpServerExchange exchange) {
+        String toHash = exchange.getQueryParameters().get("hash").peek();
+        String hash = BCrypt.withDefaults().hashToString(12, toHash.toCharArray());
+        exchange.getResponseSender().send(hash);
     }
 
     public void info(HttpServerExchange exchange) {
