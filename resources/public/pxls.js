@@ -6485,9 +6485,9 @@ window.App = (function() {
                 Object.values(authServices).map(service => {
                   let anchor;
                   if (service.id === 'defaultAuth') {
-                    anchor = crel('a', { href: `/signin/${service.id}?redirect=1` }, service.name);
-                  } else {
                     anchor = crel('a', { href: `/${service.id}?redirect=1` }, service.name);
+                  } else {
+                    anchor = crel('a', { href: `/signin/${service.id}?redirect=1` }, service.name);
                   }
                   anchor.addEventListener('click', function(e) {
                     if (window.open(this.href, '_blank')) {
