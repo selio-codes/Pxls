@@ -6493,10 +6493,10 @@ window.App = (function() {
                     crel(toRet, crel('span', { style: 'font-style: italic; font-size: .75em; font-weight: bold; color: red; margin-left: .5em' }, 'New Accounts Disabled'));
                   }
                   console.log(toRet);
-                  //crel('li', crel('a', { href: '/defaultAuth' }, 'Alternate Login'))
+                  //  crel('li', crel('a', { href: '/defaultAuth' }, 'Alternate Login'))
                   return toRet;
                 })
-              ),
+              )
             ),
             cancelButton
           );
