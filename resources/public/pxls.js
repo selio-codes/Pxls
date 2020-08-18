@@ -6473,14 +6473,22 @@ window.App = (function() {
           cancelButton.addEventListener('click', function() {
             self.elements.prompt.fadeOut(200);
           });
+          
+          const authServices = data.authServices;
+          authServices.alternate = {id: "defaultAuth", name:"Alternate Login", registrationEnabled: true};
 
           self.elements.prompt[0].innerHTML = '';
           crel(self.elements.prompt[0],
             crel('div', { class: 'content' },
               crel('h1', 'Sign in with...'),
               crel('ul',
-                Object.values(data.authServices).map(service => {
-                  const anchor = crel('a', { href: `/signin/${service.id}?redirect=1` }, service.name);
+                Object.values(authServices).map(service => {
+                  let anchor;
+                  if (service.id === "alternate") {
+                    anchor = crel('a', { href: `/signin/${service.id}?redirect=1` }, service.name);
+                  } else {
+                    anchor = crel('a', { href: `/${service.id}?redirect=1` }, service.name);
+                  }
                   anchor.addEventListener('click', function(e) {
                     if (window.open(this.href, '_blank')) {
                       e.preventDefault();
@@ -6494,8 +6502,7 @@ window.App = (function() {
                   }
                   return toRet;
                 })
-              ),
-              crel('li', crel('a', { href: '/defaultAuth' }, 'Alternate Login'))
+              )
             ),
             cancelButton
           );
