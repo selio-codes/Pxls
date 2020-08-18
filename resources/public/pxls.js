@@ -6473,9 +6473,9 @@ window.App = (function() {
           cancelButton.addEventListener('click', function() {
             self.elements.prompt.fadeOut(200);
           });
-          
+
           const authServices = data.authServices;
-          authServices.alternate = {id: "defaultAuth", name:"Alternate Login", registrationEnabled: true};
+          authServices.alternate = { id: 'defaultAuth', name: 'Alternate Login', registrationEnabled: true };
 
           self.elements.prompt[0].innerHTML = '';
           crel(self.elements.prompt[0],
