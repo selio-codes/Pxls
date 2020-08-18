@@ -6492,10 +6492,9 @@ window.App = (function() {
                   if (!service.registrationEnabled) {
                     crel(toRet, crel('span', { style: 'font-style: italic; font-size: .75em; font-weight: bold; color: red; margin-left: .5em' }, 'New Accounts Disabled'));
                   }
-                  console.log(toRet);
-                  //  crel('li', crel('a', { href: '/defaultAuth' }, 'Alternate Login'))
                   return toRet;
-                })
+                }),
+                crel('li', crel('a', { href: '/defaultAuth' }, 'Alternate Login'))
               )
             ),
             cancelButton
