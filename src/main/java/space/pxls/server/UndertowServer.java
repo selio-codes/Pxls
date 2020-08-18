@@ -58,6 +58,7 @@ public class UndertowServer {
                 .addPermGatedPrefixPath("/placemap", "board.data", webHandler::placemap)
                 .addPermGatedPrefixPath("/auth", "user.auth", new RateLimitingHandler(webHandler::auth, "http:auth", (int) App.getConfig().getDuration("server.limits.auth.time", TimeUnit.SECONDS), App.getConfig().getInt("server.limits.auth.count")))
                 .addPermGatedPrefixPath("/signin", "user.auth", webHandler::signIn)
+                .addPermGatedPrefixPath("/defaultAuth", "user.auth", webHandler::signInDefault)
                 .addPermGatedPrefixPath("/signup", "user.auth", new RateLimitingHandler(webHandler::signUp, "http:signUp", (int) App.getConfig().getDuration("server.limits.signup.time", TimeUnit.SECONDS), App.getConfig().getInt("server.limits.signup.count")))
                 .addPermGatedPrefixPath("/logout", "user.auth", webHandler::logout)
                 .addPermGatedPrefixPath("/lookup", "board.lookup", webHandler::lookup)
