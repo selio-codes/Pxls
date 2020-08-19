@@ -1668,13 +1668,13 @@ public class WebHandler {
                     return;
                 } else {
                     if(login.substring(0,5).equals("hash:")) {
-                        error = "Incorrect Password";
+                        error = "Incorrect Username/Password";
                     } else {
                         error = "Account does not qualify for Alternative Login";
                     }
                 }
             } else {
-                error = "Incorrect Username";
+                error = "Incorrect Username/Password";
             }
         }
         String path = App.getStorageDir().resolve("resources/public/login.html").toString();
