@@ -1648,6 +1648,7 @@ public class WebHandler {
 
     public void signInDefault(HttpServerExchange exchange) {
         String error = "";
+        boolean redirect = exchange.getQueryParameters().get("redirect") != null;
         Map<String, Deque<String>> params = exchange.getQueryParameters();
         if(params.containsKey("username")) {
             String username = params.get("username").peek();
