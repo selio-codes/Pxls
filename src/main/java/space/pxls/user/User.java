@@ -636,6 +636,11 @@ public class User {
         if (this.hasRainbowChatNameColor()) {
             toReturn.add("rainbow");
         }
+        return toReturn.size() != 0 ? toReturn : null;
+    }
+
+    public List<String> getChatNameClasses() {
+        List<String> toReturn = new ArrayList<>();
         if (this.hasDonatorChatNameColor()) {
             toReturn.add("donator");
         }
