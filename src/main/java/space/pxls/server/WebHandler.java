@@ -1660,7 +1660,11 @@ public class WebHandler {
                     String ip = exchange.getAttachment(IPReader.IP);
                     String loginToken = App.getUserManager().logIn(user, ip);
                     setAuthCookie(exchange, loginToken, 24);
-                    respond(exchange, StatusCodes.OK, new AuthResponse(loginToken, false));
+                    if (redirect) {
+                        redirect(exchange, String.format("/auth_done.html?token=%s&signup=false", encodedURIComponent(loginToken)));
+                    } else {
+                        respond(exchange, StatusCodes.OK, new AuthResponse(loginToken, false));
+                    }
                     return;
                 } else {
                     if(login.substring(0,5).equals("hash:")) {
