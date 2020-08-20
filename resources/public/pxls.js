@@ -6494,8 +6494,7 @@ window.App = (function() {
                   }
                   return toRet;
                 })
-              ),
-              crel('a', { href: '/defaultAuth' }, 'Alternate Login')
+              )
             ),
             cancelButton
           );
