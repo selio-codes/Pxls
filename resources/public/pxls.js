@@ -3253,7 +3253,7 @@ window.App = (function() {
       banner: {
         HTMLs: [
           crel('span', crel('i', { class: 'fab fa-discord fa-is-left' }), ' Official Discord: ', crel('a', {
-            href: 'https://pxls.space/discord',
+            href: 'https://discord.gg/HVAR9sb',
             target: '_blank'
           }, 'Invite Link')).outerHTML,
           crel('span', { style: '' }, crel('i', { class: 'fas fa-gavel fa-is-left' }), 'Read the chat rules in the info panel.').outerHTML,
@@ -3305,7 +3305,7 @@ window.App = (function() {
           color: '#005f00'
         }
       ],
-      specialChatColorClasses: ['rainbow', 'donator'],
+      specialChatColorClasses: ['rainbow'],
       init: function() {
         self.initTitle = document.title;
         self._initThemes();
@@ -4874,7 +4874,6 @@ window.App = (function() {
 
         const _selUsernameColor = crel('select', { class: 'username-color-picker' },
           user.isStaff() ? crel('option', { value: -1, class: 'rainbow' }, 'rainbow') : null,
-          user.isDonator() ? crel('option', { value: -2, class: 'donator' }, 'donator') : null,
           place.getPalette().map((x, i) => crel('option', {
             value: i,
             'data-idx': i,
@@ -6429,7 +6428,6 @@ window.App = (function() {
       chatNameColor: 0,
       getRoles: () => self.roles,
       isStaff: () => self.hasPermission('user.admin'),
-      isDonator: () => self.hasPermission('user.donator'),
       getPermissions: () => {
         let perms = [];
         self.roles.flatMap(function loop(node) {
@@ -6474,13 +6472,21 @@ window.App = (function() {
             self.elements.prompt.fadeOut(200);
           });
 
+          const authServices = data.authServices;
+          authServices.alternate = { id: 'defaultAuth', name: 'Alternate Login', registrationEnabled: true };
+
           self.elements.prompt[0].innerHTML = '';
           crel(self.elements.prompt[0],
             crel('div', { class: 'content' },
               crel('h1', 'Sign in with...'),
               crel('ul',
-                Object.values(data.authServices).map(service => {
-                  const anchor = crel('a', { href: `/signin/${service.id}?redirect=1` }, service.name);
+                Object.values(authServices).map(service => {
+                  let anchor;
+                  if (service.id === 'defaultAuth') {
+                    anchor = crel('a', { href: `/${service.id}?redirect=1` }, service.name);
+                  } else {
+                    anchor = crel('a', { href: `/signin/${service.id}?redirect=1` }, service.name);
+                  }
                   anchor.addEventListener('click', function(e) {
                     if (window.open(this.href, '_blank')) {
                       e.preventDefault();
@@ -6744,6 +6750,7 @@ window.App = (function() {
       init: self.init,
       getRoles: self.getRoles,
       isStaff: self.isStaff,
+      isDonator: self.isDonator,
       getPermissions: self.getPermissions,
       hasPermission: self.hasPermission,
       getUsername: self.getUsername,
@@ -7093,7 +7100,6 @@ window.App = (function() {
       getRoles: user.getRoles,
       isLoggedIn: user.isLoggedIn,
       isStaff: user.isStaff,
-      isDonator: user.isDonator,
       getPermissions: user.getPermissions,
       hasPermission: user.hasPermission
     },
