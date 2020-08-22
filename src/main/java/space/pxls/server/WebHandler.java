@@ -1686,12 +1686,6 @@ public class WebHandler {
         exchange.getResponseSender().send(data);
     }
 
-    public void gimmeHash(HttpServerExchange exchange) {
-        String toHash = exchange.getQueryParameters().get("hash").peek();
-        String hash = BCrypt.withDefaults().hashToString(12, toHash.toCharArray());
-        exchange.getResponseSender().send(hash);
-    }
-
     public void info(HttpServerExchange exchange) {
         exchange.getResponseHeaders()
                 .add(HttpString.tryFromString("Content-Type"), "application/json")
