@@ -3389,7 +3389,7 @@ window.App = (function() {
           color: '#005f00'
         }
       ],
-      specialChatColorClasses: ['rainbow', 'donator'],
+      specialChatColorClasses: ['rainbow', 'donator', 'hothot', 'trans'],
       init: function() {
         self.initTitle = document.title;
         self._initThemes();
@@ -4971,7 +4971,9 @@ window.App = (function() {
         );
 
         const _selUsernameColor = crel('select', { class: 'username-color-picker' },
+          user.isTrans() ? crel('option', { value: -4, class: 'trans' }, 'trans') : null,
           user.isStaff() ? crel('option', { value: -1, class: 'rainbow' }, 'rainbow') : null,
+          user.isHotHot() ? crel('option', { value: -3, class: 'hothot' }, 'hothot') : null,
           user.isDonator() ? crel('option', { value: -2, class: 'donator' }, 'donator') : null,
           place.getPalette().map((x, i) => crel('option', {
             value: i,
@@ -6456,6 +6458,8 @@ window.App = (function() {
       getRoles: () => self.roles,
       isStaff: () => self.hasPermission('user.admin'),
       isDonator: () => self.hasPermission('user.donator'),
+      isHotHot: () => self.hasPermission('user.hothot'),
+      isTrans: () => self.hasPermission('user.trans'),
       getPermissions: () => {
         let perms = [];
         self.roles.flatMap(function loop(node) {
@@ -6779,6 +6783,8 @@ window.App = (function() {
       getRoles: self.getRoles,
       isStaff: self.isStaff,
       isDonator: self.isDonator,
+      isHotHot: self.isHotHot,
+      isTrans: self.isTrans,
       getPermissions: self.getPermissions,
       hasPermission: self.hasPermission,
       getUsername: self.getUsername,
@@ -7130,6 +7136,8 @@ window.App = (function() {
       isLoggedIn: user.isLoggedIn,
       isStaff: user.isStaff,
       isDonator: user.isDonator,
+      isHotHot: user.isHotHot,
+      isTrans: user.isTrans,
       getPermissions: user.getPermissions,
       hasPermission: user.hasPermission
     },
