@@ -17,7 +17,7 @@ Stem Place is an open source fork of the collaborative image editor 'pxls.space'
 1. Install the above requirements either via package manager (recommended) or by building from their sources.
 2. Clone the repo:
 
-    > $ git clone git@github.com:Mikarific/StemPlace.git
+    > $ git clone git@github.com:StemPlace.git
 
 3. Navigate to the directory:
 
