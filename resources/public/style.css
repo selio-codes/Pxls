@@ -407,7 +407,7 @@ dt {
 }
 
 .hothot {
-    background-image: linear-gradient(45deg, #D0C0B3, #AA8B74 25%, #725946 50%, #AA8B74 75%, #D0C0B3)
+    background-image: linear-gradient(45deg, #D0C0B3, #AA8B74 25%, #725946 50%, #AA8B74 75%, #D0C0B3);
     background-size: 500px 100%;
     animation: hothot-move 4s linear 1ms infinite;
     transform: rotateZ(360deg); /* force hothot rendering onto GPU if available */
@@ -423,7 +423,7 @@ dt {
 }
 
 .trans {
-    background-image: linear-gradient(45deg, #55CDFC, #F7A8B8 25%, #FFFFFF 50%, #F7A8B8 75%, #55CDFC)
+    background-image: linear-gradient(45deg, #55CDFC, #F7A8B8 25%, #FFFFFF 50%, #F7A8B8 75%, #55CDFC);
     background-size: 250px 100%;
     animation: trans-move 4s linear 1ms infinite;
     transform: rotateZ(360deg); /* force trans rendering onto GPU if available */
