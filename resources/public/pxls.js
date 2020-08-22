@@ -3337,7 +3337,7 @@ window.App = (function() {
       banner: {
         HTMLs: [
           crel('span', crel('i', { class: 'fab fa-discord fa-is-left' }), ' Official Discord: ', crel('a', {
-            href: 'https://discord.gg/HVAR9sb',
+            href: 'https://stemk12.art/discord',
             target: '_blank'
           }, 'Invite Link')).outerHTML,
           crel('span', { style: '' }, crel('i', { class: 'fas fa-gavel fa-is-left' }), 'Read the chat rules in the info panel.').outerHTML,
