@@ -625,6 +625,16 @@ public class User {
                 && this.chatNameColor == -2;
     }
 
+    public boolean hasHotHotChatNameColor() {
+        return hasPermission("chat.usercolor.hothot")
+                && this.chatNameColor == -3;
+    }
+
+    public boolean hasTransChatNameColor() {
+        return hasPermission("chat.usercolor.trans")
+                && this.chatNameColor == -4;
+    }
+
     public int getChatNameColor() {
         return this.chatNameColor;
     }
@@ -636,6 +646,12 @@ public class User {
         }
         if (this.hasDonatorChatNameColor()) {
             toReturn.add("donator");
+        }
+        if (this.hasHotHotChatNameColor()) {
+            toReturn.add("hothot");
+        }
+        if (this.hasTransChatNameColor()) {
+            toReturn.add("trans");
         }
         return toReturn.size() != 0 ? toReturn : null;
     }
