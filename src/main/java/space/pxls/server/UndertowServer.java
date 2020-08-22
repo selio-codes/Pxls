@@ -88,7 +88,6 @@ public class UndertowServer {
                 .addPermGatedPrefixPath("/notifications", "notification.list", webHandler::notificationsList)
                 .addExactPath("/", webHandler::index)
                 .addExactPath("/index.html", webHandler::index)
-                .addExactPath("/gimmeHash", webHandler::gimmeHash)
                 .addExactPath("/factions", new AllowedMethodsHandler(webHandler::getRequestingUserFactions, Methods.GET))
                 .addPrefixPath("/", Handlers.resource(new ClassPathResourceManager(App.class.getClassLoader(), "public/")).setCacheTime(10));
         RoutingHandler routingHandler = Handlers.routing()
