@@ -379,12 +379,24 @@ public class PacketHandler {
         if (nameColor != null && !nameColor.trim().isEmpty()) {
             try {
                 int t = Integer.parseInt(nameColor);
-                if (t >= -2 && t < App.getConfig().getStringList("board.palette").size()) {
+                if (t >= -4 && t < App.getConfig().getStringList("board.palette").size()) {
                     if (t == -1 && !user.hasPermission("chat.usercolor.rainbow")) {
                         server.send(channel, new ServerACKClientUpdate(false, "Color reserved for staff members", "NameColor", null));
                     }
                     if (t == -2 && !user.hasPermission("chat.usercolor.donator")) {
                         server.send(channel, new ServerACKClientUpdate(false, "Color reserved for donators", "NameColor", null));
+                        return;
+                    }
+                    if (t == -2 && !user.hasPermission("chat.usercolor.donator")) {
+                        server.send(channel, new ServerACKClientUpdate(false, "Color reserved for donators", "NameColor", null));
+                        return;
+                    }
+                    if (t == -3 && !user.hasPermission("chat.usercolor.hothot")) {
+                        server.send(channel, new ServerACKClientUpdate(false, "Color reserved for those who went to the Polar Express event", "NameColor", null));
+                        return;
+                    }
+                    if (t < -3 && !user.hasPermission("chat.usercolor.trans")) {
+                        server.send(channel, new ServerACKClientUpdate(false, "Color reserved for Mikarific", "NameColor", null));
                         return;
                     }
                     user.setChatNameColor(t, true);
