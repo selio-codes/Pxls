@@ -3343,7 +3343,7 @@ window.App = (function() {
       banner: {
         HTMLs: [
           crel('span', crel('i', { class: 'fab fa-discord fa-is-left' }), ' Official Discord: ', crel('a', {
-            href: 'https://pxls.space/discord',
+            href: 'https://stemk12.art/discord',
             target: '_blank'
           }, 'Invite Link')).outerHTML,
           crel('span', { style: '' }, crel('i', { class: 'fas fa-gavel fa-is-left' }), 'Read the chat rules in the info panel.').outerHTML,
@@ -3395,7 +3395,7 @@ window.App = (function() {
           color: '#005f00'
         }
       ],
-      specialChatColorClasses: ['rainbow', 'donator'],
+      specialChatColorClasses: ['rainbow', 'donator', 'hothot', 'trans'],
       init: function() {
         self.initTitle = document.title;
         self._initThemes();
@@ -3406,6 +3406,13 @@ window.App = (function() {
         self._initMultiTabDetection();
 
         self.elements.coords.click(() => coords.copyCoords(true));
+
+        if (location.href.includes('auth_invalid=true')) {
+          modal.show(modal.buildDom(
+            crel('h2', { class: 'modal-title' }, 'Error'),
+            crel('p', { style: 'padding: 0; margin: 0;' }, 'Your authentication email must end with "@s.stemk12.org" or "@stemk12.org". Please try again.')
+          ), { closeExisting: false });
+        }
 
         socket.on('alert', (data) => {
           modal.show(modal.buildDom(
@@ -4968,7 +4975,9 @@ window.App = (function() {
         );
 
         const _selUsernameColor = crel('select', { class: 'username-color-picker' },
+          user.isTrans() ? crel('option', { value: -4, class: 'trans' }, 'trans') : null,
           user.isStaff() ? crel('option', { value: -1, class: 'rainbow' }, 'rainbow') : null,
+          user.isHotHot() ? crel('option', { value: -3, class: 'hothot' }, 'hothot') : null,
           user.isDonator() ? crel('option', { value: -2, class: 'donator' }, 'donator') : null,
           place.getPalette().map((x, i) => crel('option', {
             value: i,
@@ -6454,6 +6463,8 @@ window.App = (function() {
       getRoles: () => self.roles,
       isStaff: () => self.hasPermission('user.admin'),
       isDonator: () => self.hasPermission('user.donator'),
+      isHotHot: () => self.hasPermission('user.hothot'),
+      isTrans: () => self.hasPermission('user.trans'),
       getPermissions: () => {
         let perms = [];
         self.roles.flatMap(function loop(node) {
@@ -6498,13 +6509,21 @@ window.App = (function() {
             self.elements.prompt.fadeOut(200);
           });
 
+          const authServices = data.authServices;
+          authServices.alternate = { id: 'defaultAuth', name: 'Alternate Login', registrationEnabled: true };
+
           self.elements.prompt[0].innerHTML = '';
           crel(self.elements.prompt[0],
             crel('div', { class: 'content' },
               crel('h1', 'Sign in with...'),
               crel('ul',
-                Object.values(data.authServices).map(service => {
-                  const anchor = crel('a', { href: `/signin/${service.id}?redirect=1` }, service.name);
+                Object.values(authServices).map(service => {
+                  let anchor;
+                  if (service.id === 'defaultAuth') {
+                    anchor = crel('a', { href: `/${service.id}?redirect=1` }, service.name);
+                  } else {
+                    anchor = crel('a', { href: `/signin/${service.id}?redirect=1` }, service.name);
+                  }
                   anchor.addEventListener('click', function(e) {
                     if (window.open(this.href, '_blank')) {
                       e.preventDefault();
@@ -6769,6 +6788,8 @@ window.App = (function() {
       getRoles: self.getRoles,
       isStaff: self.isStaff,
       isDonator: self.isDonator,
+      isHotHot: self.isHotHot,
+      isTrans: self.isTrans,
       getPermissions: self.getPermissions,
       hasPermission: self.hasPermission,
       getUsername: self.getUsername,
@@ -7120,6 +7141,8 @@ window.App = (function() {
       isLoggedIn: user.isLoggedIn,
       isStaff: user.isStaff,
       isDonator: user.isDonator,
+      isHotHot: user.isHotHot,
+      isTrans: user.isTrans,
       getPermissions: user.getPermissions,
       hasPermission: user.hasPermission
     },
