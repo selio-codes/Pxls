@@ -2222,8 +2222,6 @@ window.App = (function() {
             });
           });
 
-          const virginbackground = self.add('virginbackground', () => createOverlayImageData('/virginmap', '/placemap', 0x0000FF00, 0x00));
-
           $(window).keydown(function(evt) {
             if (['INPUT', 'TEXTAREA'].includes(evt.target.nodeName)) {
               // prevent inputs from triggering shortcuts
@@ -2235,6 +2233,8 @@ window.App = (function() {
             }
           });
         });
+
+        const virginbackground = self.add('virginbackground', () => createOverlayImageData('/virginmap', '/placemap', 0x0000FF00, 0x00));
 
         settings.board.virginmap.opacity.listen(function(value) {
           virginbackground.setOpacity(value);
