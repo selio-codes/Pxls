@@ -14,7 +14,7 @@ Pxls is a collaborative image editor where you can place up to six pixels at a t
 
 ## Building
 
-1. Install the above requirements either via package manager (recommended) or by building from their sources.
+1. Installl the above requirements either via package manager (recommended) or by building from their sources.
 2. Clone the repo:
 
     > $ git clone git@github.com:pxlsspace/Pxls.git
