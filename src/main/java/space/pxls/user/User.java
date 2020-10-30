@@ -316,6 +316,24 @@ public class User {
                 toReturn.add(new Badge("200k+", "200k+ Pixels Placed", "text", null));
             } else if (this.pixelCountAllTime >= 100000) {
                 toReturn.add(new Badge("100k+", "100k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 95000) {
+                toReturn.add(new Badge("95k+", "95k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 90000) {
+                toReturn.add(new Badge("90k+", "90k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 85000) {
+                toReturn.add(new Badge("85k+", "85k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 80000) {
+                toReturn.add(new Badge("80k+", "80k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 75000) {
+                toReturn.add(new Badge("75k+", "75k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 70000) {
+                toReturn.add(new Badge("70k+", "70k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 65000) {
+                toReturn.add(new Badge("65k+", "65k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 60000) {
+                toReturn.add(new Badge("60k+", "60k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 55000) {
+                toReturn.add(new Badge("55k+", "55k+ Pixels Placed", "text", null));
             } else if (this.pixelCountAllTime >= 50000) {
                 toReturn.add(new Badge("50k+", "50k+ Pixels Placed", "text", null));
             } else if (this.pixelCountAllTime >= 45000) {
@@ -370,6 +388,10 @@ public class User {
 
     public Long getBanExpiryTime() {
         return banExpiryTime;
+    }
+
+    public boolean isPermaBanned() {
+        return banExpiryTime == 0;
     }
 
     private void setBanExpiryTime(Integer timeFromNowSeconds) {
@@ -644,13 +666,13 @@ public class User {
     public boolean hasRainbowChatNameColor() {
         return hasPermission("chat.usercolor.rainbow")
                 && this.chatNameColor == -1;
-        
+
     }
-    
+
      public boolean hasDonatorChatNameColor() {
         return hasPermission("chat.usercolor.donator")
                 && this.chatNameColor == -2;
-        
+
     }
 
     public boolean hasHotHotChatNameColor() {
