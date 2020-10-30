@@ -5019,6 +5019,8 @@ window.App = (function() {
         const _selUsernameColor = crel('select', { class: 'username-color-picker' },
           user.hasPermission('chat.usercolor.rainbow') ? crel('option', { value: -1, class: 'rainbow' }, 'rainbow') : null,
           user.hasPermission('chat.usercolor.donator') ? crel('option', { value: -2, class: 'donator' }, 'donator') : null,
+          user.hasPermission('chat.usercolor.hothot') ? crel('option', { value: -3, class: 'hothot' }, 'hothot') : null,
+          user.hasPermission('chat.usercolor.trans') ? crel('option', { value: -4, class: 'trans' }, 'trans') : null,
 
           place.getPalette().map((x, i) => crel('option', {
             value: i,
