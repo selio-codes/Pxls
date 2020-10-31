@@ -7110,12 +7110,12 @@ window.App = (function() {
   chromeOffsetWorkaround.init();
   // and here we finally go...
   board.start();
-  
+
   window.addEventListener('load', function () {
-    if(window.location.href.includes("template")) {
+    if (window.location.href.includes('template')) {
       window.location.replace('stemplace:/' + window.location.href.split(window.location.host)[1]);
     }
-  })
+  });
 
   window.TH = window.TH || TH;
 
