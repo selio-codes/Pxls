@@ -7112,9 +7112,9 @@ window.App = (function() {
   board.start();
 
   window.addEventListener('load', function () {
-    if (window.location.href.includes('template') && !navigator.userAgent.includes('Electron')) {
-      const location = window.location.href;
-      setTimeout(function () { window.location = location; }, 25);
+    if (window.location.href.includes('template') && !navigator.userAgent.includes('Electron') && !electron) {
+      const location = window.location.href+"&electron=false";
+      setTimeout(function () { window.location.replace(location); }, 25);
       window.location = 'stemplace:/' + window.location.href.split(window.location.host)[1];
     }
   });
