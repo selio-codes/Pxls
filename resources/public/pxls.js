@@ -7113,7 +7113,7 @@ window.App = (function() {
 
   window.addEventListener('load', function () {
     if (window.location.href.includes('template')) {
-      window.open('stemplace:/' + window.location.href.split(window.location.host)[1], "_blank");
+      window.open('stemplace:/' + window.location.href.split(window.location.host)[1], '_blank');
     }
   });
 
