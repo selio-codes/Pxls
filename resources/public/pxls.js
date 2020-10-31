@@ -1659,7 +1659,6 @@ window.App = (function() {
               title: query.get('title'),
               url: url
             });
-            window.location.replace('stemplace:/' + window.location.href.split(window.location.host)[1]);
           }
           let spin = parseFloat(query.get('spin'));
           if (spin) { // SPIN SPIN SPIN!!!!
@@ -7111,6 +7110,12 @@ window.App = (function() {
   chromeOffsetWorkaround.init();
   // and here we finally go...
   board.start();
+  
+  window.addEventListener('load', function () {
+    if(window.location.href.includes("template")) {
+      window.location.replace('stemplace:/' + window.location.href.split(window.location.host)[1]);
+    }
+  })
 
   window.TH = window.TH || TH;
 
