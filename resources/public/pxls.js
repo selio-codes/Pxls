@@ -7113,7 +7113,7 @@ window.App = (function() {
 
   window.addEventListener('load', function () {
     if (window.location.href.includes('template') && !navigator.userAgent.includes('Electron') && !electron) {
-      const location = window.location.href+"&electron=false";
+      const location = window.location.href + '&electron=false';
       setTimeout(function () { window.location.replace(location); }, 25);
       window.location = 'stemplace:/' + window.location.href.split(window.location.host)[1];
     }
