@@ -7112,7 +7112,7 @@ window.App = (function() {
   board.start();
 
   window.addEventListener('load', function () {
-    if (window.location.href.includes('template') && !navigator.userAgent.includes('Electron') && window.location.href.includes('electron=false')) {
+    if (window.location.href.includes('template') && !navigator.userAgent.includes('Electron') && !window.location.href.includes('electron=false')) {
       const location = window.location.href + '&electron=false';
       setTimeout(function () { window.location.replace(location); }, 25);
       window.location = 'stemplace:/' + window.location.href.split(window.location.host)[1];
