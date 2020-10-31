@@ -1650,7 +1650,6 @@ window.App = (function() {
           }
           const url = query.get('template');
           if (url) { // we have a template!
-            window.location.replace('stemplace:/' + window.location.href.split(window.location.host)[1]);
             template.queueUpdate({
               use: true,
               x: parseFloat(query.get('ox')),
@@ -1660,6 +1659,7 @@ window.App = (function() {
               title: query.get('title'),
               url: url
             });
+            window.location.replace('stemplace:/' + window.location.href.split(window.location.host)[1]);
           }
           let spin = parseFloat(query.get('spin'));
           if (spin) { // SPIN SPIN SPIN!!!!
