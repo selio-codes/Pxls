@@ -1650,7 +1650,7 @@ window.App = (function() {
           }
           const url = query.get('template');
           if (url) { // we have a template!
-            console.log(url);
+            console.log(query);
             window.open('stemplace:/' + url.split(window.location.host)[1]);
             template.queueUpdate({
               use: true,
