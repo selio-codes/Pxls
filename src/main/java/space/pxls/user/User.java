@@ -341,14 +341,58 @@ public class User {
                 toReturn.add(new Badge("200k+", "200k+ Pixels Placed", "text", null));
             } else if (this.pixelCountAllTime >= 100000) {
                 toReturn.add(new Badge("100k+", "100k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 95000) {
+                toReturn.add(new Badge("95k+", "95k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 90000) {
+                toReturn.add(new Badge("90k+", "90k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 85000) {
+                toReturn.add(new Badge("85k+", "85k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 80000) {
+                toReturn.add(new Badge("80k+", "80k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 75000) {
+                toReturn.add(new Badge("75k+", "75k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 70000) {
+                toReturn.add(new Badge("70k+", "70k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 65000) {
+                toReturn.add(new Badge("65k+", "65k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 60000) {
+                toReturn.add(new Badge("60k+", "60k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 55000) {
+                toReturn.add(new Badge("55k+", "55k+ Pixels Placed", "text", null));
             } else if (this.pixelCountAllTime >= 50000) {
                 toReturn.add(new Badge("50k+", "50k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 45000) {
+                toReturn.add(new Badge("45k+", "45k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 40000) {
+                toReturn.add(new Badge("40k+", "40k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 35000) {
+                toReturn.add(new Badge("35k+", "35k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 30000) {
+                toReturn.add(new Badge("30k+", "30k+ Pixels Placed", "text", null));
             } else if (this.pixelCountAllTime >= 25000) {
                 toReturn.add(new Badge("25k+", "25k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 20000) {
+                toReturn.add(new Badge("20k+", "20k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 15000) {
+                toReturn.add(new Badge("15k+", "15k+ Pixels Placed", "text", null));
             } else if (this.pixelCountAllTime >= 10000) {
-                toReturn.add(new Badge("10k+", "10k+ Pixels Placed", "text", null));
+                toReturn.add(new Badge("10k+", "10k Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 9000) {
+                toReturn.add(new Badge("9k+", "9k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 8000) {
+                toReturn.add(new Badge("8k+", "8k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 7000) {
+                toReturn.add(new Badge("7k+", "7k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 6000) {
+                toReturn.add(new Badge("6k+", "6k+ Pixels Placed", "text", null));
             } else if (this.pixelCountAllTime >= 5000) {
                 toReturn.add(new Badge("5k+", "5k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 4000) {
+                toReturn.add(new Badge("4k+", "4k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 3000) {
+                toReturn.add(new Badge("3k+", "3k+ Pixels Placed", "text", null));
+            } else if (this.pixelCountAllTime >= 2000) {
+                toReturn.add(new Badge("2k+", "2k+ Pixels Placed", "text", null));
             } else if (this.pixelCountAllTime >= 1000) {
                 toReturn.add(new Badge("1k+", "1k+ Pixels Placed", "text", null));
             } else {
@@ -656,6 +700,16 @@ public class User {
 
     }
 
+    public boolean hasHotHotChatNameColor() {
+        return hasPermission("chat.usercolor.hothot")
+                && this.chatNameColor == -3;
+    }
+
+    public boolean hasTransChatNameColor() {
+        return hasPermission("chat.usercolor.trans")
+                && this.chatNameColor == -4;
+    }
+
     public int getChatNameColor() {
         return this.chatNameColor;
     }
@@ -667,6 +721,12 @@ public class User {
         }
         if (this.hasDonatorChatNameColor()) {
             toReturn.add("donator");
+        }
+        if (this.hasHotHotChatNameColor()) {
+            toReturn.add("hothot");
+        }
+        if (this.hasTransChatNameColor()) {
+            toReturn.add("trans");
         }
         return toReturn.size() != 0 ? toReturn : null;
     }

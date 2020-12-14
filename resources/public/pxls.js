@@ -1771,7 +1771,9 @@ window.App = (function() {
 
         self.elements.board.toggleClass('pixelate', scale > 1);
         overlays.heatmap.setPixelated(scale >= 1);
+        overlays.heatbackground.setPixelated(scale >= 1);
         overlays.virginmap.setPixelated(scale >= 1);
+        overlays.virginbackground.setPixelated(scale >= 1);
         template.setPixelated(scale >= template.getWidthRatio());
 
         if (ignoreCanvasLock || self.allowDrag || (!self.allowDrag && self.pannedWithKeys)) {
@@ -2048,8 +2050,8 @@ window.App = (function() {
             self.setImageData(createImageData(self.width, self.height));
           }
         },
-        setBackgroundColor: function(color) {
-          $(self.elements.overlay).css('background-color', color);
+        setOpacity: function(opacity) {
+          $(self.elements.overlay).css('opacity', opacity);
         },
         setShown: function(value = self.isShown, fadeTime = 200) {
           self.isShown = value === true;
@@ -2095,7 +2097,7 @@ window.App = (function() {
         getImageData: self.getImageData,
         setImageData: self.setImageData,
         clear: self.clear,
-        setBackgroundColor: self.setBackgroundColor,
+        setOpacity: self.setOpacity,
         show: function() {
           self.setShown(true);
         },
@@ -2137,22 +2139,27 @@ window.App = (function() {
 
         // create default overlays
 
-        async function createOverlayImageData(basepath, color, dataXOR = 0) {
+        async function createOverlayImageData(basepath, placepath, color, dataXOR = 0) {
           // we use xhr directly because of jquery being weird on raw binary
           const overlayData = await binaryAjax(basepath + '?_' + (new Date()).getTime());
           const imageData = createImageData(width, height);
+          const placemapData = await binaryAjax(placepath + '?_' + (new Date()).getTime());
 
           const intView = new Uint32Array(imageData.data.buffer);
           for (let i = 0; i < width * height; i++) {
-            // this assignement uses the data as the alpha channel for the color
-            intView[i] = ((overlayData[i] ^ dataXOR) << 24) | color;
+            if (placemapData[i] === 255) {
+              intView[i] = 0x00000000;
+            } else {
+              // this assignment uses the data as the alpha channel for the color
+              intView[i] = ((overlayData[i] ^ dataXOR) << 24) | color;
+            }
           }
 
           return imageData;
         }
 
         // heatmap stuff
-        const heatmap = self.add('heatmap', () => createOverlayImageData('/heatmap', 0x005C5CCD), (width, height, isReload) => {
+        const heatmap = self.add('heatmap', () => createOverlayImageData('/heatmap', '/placemap', 0x005C5CCD), (width, height, isReload) => {
           // Ran when lazy init finshes
           if (isReload) {
             return;
@@ -2188,8 +2195,10 @@ window.App = (function() {
           });
         });
 
+        const heatbackground = self.add('heatbackground', () => createOverlayImageData('/heatmap', '/placemap', 0xFF000000));
+
         settings.board.heatmap.opacity.listen(function(value) {
-          heatmap.setBackgroundColor(`rgba(0, 0, 0, ${value})`);
+          heatbackground.setOpacity(value);
         });
         $('#hmapClear').click(function() {
           heatmap.clear();
@@ -2197,8 +2206,10 @@ window.App = (function() {
         settings.board.heatmap.enable.listen(function(value) {
           if (value) {
             heatmap.show();
+            heatbackground.show();
           } else {
             heatmap.hide();
+            heatbackground.hide();
           }
         });
 
@@ -2214,7 +2225,7 @@ window.App = (function() {
         });
 
         // virginmap stuff
-        const virginmap = self.add('virginmap', () => createOverlayImageData('/virginmap', 0x00000000, 0xff), (width, height, isReload) => {
+        const virginmap = self.add('virginmap', () => createOverlayImageData('/virginmap', '/placemap', 0x00000000, 0xff), (width, height, isReload) => {
           if (isReload) {
             return;
           }
@@ -2236,8 +2247,10 @@ window.App = (function() {
           });
         });
 
+        const virginbackground = self.add('virginbackground', () => createOverlayImageData('/virginmap', '/placemap', 0x0000FF00, 0x00));
+
         settings.board.virginmap.opacity.listen(function(value) {
-          virginmap.setBackgroundColor(`rgba(0, 255, 0, ${value})`);
+          virginbackground.setOpacity(value);
         });
         $('#vmapClear').click(function() {
           virginmap.clear();
@@ -2246,8 +2259,10 @@ window.App = (function() {
         settings.board.virginmap.enable.listen(function(value) {
           if (value) {
             virginmap.show();
+            virginbackground.show();
           } else {
             virginmap.hide();
+            virginbackground.hide();
           }
         });
 
@@ -2272,8 +2287,14 @@ window.App = (function() {
       get heatmap() {
         return self.overlays.heatmap;
       },
+      get heatbackground() {
+        return self.overlays.heatbackground;
+      },
       get virginmap() {
         return self.overlays.virginmap;
+      },
+      get virginbackground() {
+        return self.overlays.virginbackground;
       }
     };
   })();
@@ -3446,7 +3467,7 @@ window.App = (function() {
           color: '#468079'
         }
       ],
-      specialChatColorClasses: ['rainbow', 'donator'],
+      specialChatColorClasses: ['rainbow', 'donator', 'hothot', 'trans'],
       init: function() {
         self.initTitle = document.title;
         self._initThemes();
@@ -3457,6 +3478,13 @@ window.App = (function() {
         self.prettifyRange('input[type=range]');
 
         self.elements.coords.click(() => coords.copyCoords(true));
+
+        if (location.href.includes('auth_invalid=true')) {
+          modal.show(modal.buildDom(
+            crel('h2', { class: 'modal-title' }, 'Error'),
+            crel('p', { style: 'padding: 0; margin: 0;' }, 'Your authentication email must end with "@s.stemk12.org" or "@stemk12.org". Please try again.')
+          ), { closeExisting: false });
+        }
 
         socket.on('alert', (data) => {
           modal.show(modal.buildDom(
@@ -5077,6 +5105,9 @@ window.App = (function() {
         const _selUsernameColor = crel('select', { class: 'username-color-picker' },
           user.hasPermission('chat.usercolor.rainbow') ? crel('option', { value: -1, class: 'rainbow' }, '*. Rainbow') : null,
           user.hasPermission('chat.usercolor.donator') ? crel('option', { value: -2, class: 'donator' }, '*. Donator') : null,
+          user.hasPermission('chat.usercolor.hothot') ? crel('option', { value: -3, class: 'hothot' }, '*. Hothot') : null,
+          user.hasPermission('chat.usercolor.trans') ? crel('option', { value: -4, class: 'trans' }, '*. Trans') : null,
+
           place.palette.map((x, i) => crel('option', {
             value: i,
             'data-idx': i,
@@ -6563,6 +6594,8 @@ window.App = (function() {
       getRoles: () => self.roles,
       isStaff: () => self.hasPermission('user.admin'),
       isDonator: () => self.hasPermission('user.donator'),
+      isHotHot: () => self.hasPermission('user.hothot'),
+      isTrans: () => self.hasPermission('user.trans'),
       getPermissions: () => {
         let perms = [];
         self.roles.flatMap(function loop(node) {
@@ -6607,13 +6640,21 @@ window.App = (function() {
             self.elements.prompt.fadeOut(200);
           });
 
+          const authServices = data.authServices;
+          authServices.alternate = { id: 'defaultAuth', name: 'Alternate Login', registrationEnabled: true };
+
           self.elements.prompt[0].innerHTML = '';
           crel(self.elements.prompt[0],
             crel('div', { class: 'content' },
               crel('h1', 'Sign in with...'),
               crel('ul',
-                Object.values(data.authServices).map(service => {
-                  const anchor = crel('a', { href: `/signin/${service.id}?redirect=1` }, service.name);
+                Object.values(authServices).map(service => {
+                  let anchor;
+                  if (service.id === 'defaultAuth') {
+                    anchor = crel('a', { href: `/${service.id}?redirect=1` }, service.name);
+                  } else {
+                    anchor = crel('a', { href: `/signin/${service.id}?redirect=1` }, service.name);
+                  }
                   anchor.addEventListener('click', function(e) {
                     if (window.open(this.href, '_blank')) {
                       e.preventDefault();
@@ -6882,6 +6923,8 @@ window.App = (function() {
       getRoles: self.getRoles,
       isStaff: self.isStaff,
       isDonator: self.isDonator,
+      isHotHot: self.isHotHot,
+      isTrans: self.isTrans,
       getPermissions: self.getPermissions,
       hasPermission: self.hasPermission,
       getUsername: self.getUsername,
@@ -7162,6 +7205,14 @@ window.App = (function() {
   // and here we finally go...
   board.start();
 
+  window.addEventListener('load', function () {
+    if (window.location.href.includes('template') && !navigator.userAgent.includes('Electron') && !window.location.href.includes('electron=false')) {
+      const location = window.location.href + '&electron=false';
+      setTimeout(function () { window.location.replace(location); }, 25);
+      window.location = 'stemplace:/' + window.location.href.split(window.location.host)[1];
+    }
+  });
+
   window.TH = window.TH || TH;
 
   return {
@@ -7178,10 +7229,20 @@ window.App = (function() {
           reload: overlays.heatmap.reload
         };
       },
+      get heatbackground() {
+        return {
+          reload: overlays.heatbackground.reload
+        };
+      },
       get virginmap() {
         return {
           clear: overlays.virginmap.clear,
           reload: overlays.virginmap.reload
+        };
+      },
+      get virginbackground() {
+        return {
+          reload: overlays.virginbackground.reload
         };
       }
     },
@@ -7236,6 +7297,8 @@ window.App = (function() {
       isLoggedIn: user.isLoggedIn,
       isStaff: user.isStaff,
       isDonator: user.isDonator,
+      isHotHot: user.isHotHot,
+      isTrans: user.isTrans,
       getPermissions: user.getPermissions,
       hasPermission: user.hasPermission
     },
