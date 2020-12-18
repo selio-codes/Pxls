@@ -77,7 +77,7 @@ html {
     --chat-odd-background: rgba(0, 0, 0, 0.1);
     --chat-abbr-underline-color: var(--general-text-color);
     --chat-badge-background: #181e23;
-    --chat-badge-text-color: #468079;
+    --chat-badge-text-color: #71CFC3;
     --chat-server-action-text-color: var(--text-muted-color);
     --chat-user-text-shadow-color: #555;
     --chat-purged-text-color: var(--text-muted-color);
