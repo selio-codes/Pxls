@@ -56,13 +56,14 @@ public class UndertowServer {
                 .addPermGatedPrefixPath("/heatmap", "board.data", webHandler::heatmap)
                 .addPermGatedPrefixPath("/virginmap", "board.data", webHandler::virginmap)
                 .addPermGatedPrefixPath("/placemap", "board.data", webHandler::placemap)
+                .addPermGatedPrefixPath("/initialboarddata", "board.data", webHandler::initialdata)
                 .addPermGatedPrefixPath("/auth", "user.auth", new RateLimitingHandler(webHandler::auth, "http:auth", (int) App.getConfig().getDuration("server.limits.auth.time", TimeUnit.SECONDS), App.getConfig().getInt("server.limits.auth.count")))
                 .addPermGatedPrefixPath("/signin", "user.auth", webHandler::signIn)
                 .addPermGatedPrefixPath("/defaultAuth", "user.auth", webHandler::signInDefault)
                 .addPermGatedPrefixPath("/signup", "user.auth", new RateLimitingHandler(webHandler::signUp, "http:signUp", (int) App.getConfig().getDuration("server.limits.signup.time", TimeUnit.SECONDS), App.getConfig().getInt("server.limits.signup.count")))
                 .addPermGatedPrefixPath("/logout", "user.auth", webHandler::logout)
-                .addPermGatedPrefixPath("/lookup", "board.lookup", webHandler::lookup)
-                .addPermGatedPrefixPath("/report", "board.report", new RateLimitingHandler(webHandler::report, "http:lookup", (int) App.getConfig().getDuration("server.limits.lookup.time", TimeUnit.SECONDS), App.getConfig().getInt("server.limits.lookup.count")))
+                .addPermGatedPrefixPath("/lookup", "board.lookup", new RateLimitingHandler(webHandler::lookup, "http:lookup", (int) App.getConfig().getDuration("server.limits.lookup.time", TimeUnit.SECONDS), App.getConfig().getInt("server.limits.lookup.count")))
+                .addPermGatedPrefixPath("/report", "board.report", webHandler::report)
                 .addPermGatedPrefixPath("/reportChat", "chat.report", webHandler::chatReport)
                 .addPermGatedPrefixPath("/whoami", "user.auth", webHandler::whoami)
                 .addPermGatedPrefixPath("/users", "user.online", webHandler::users)
@@ -146,7 +147,7 @@ public class UndertowServer {
                 if (type.equals("pixel")) obj = App.getGson().fromJson(jsonObj, ClientPlace.class);
                 if (type.equals("undo")) obj = App.getGson().fromJson(jsonObj, ClientUndo.class);
                 if (type.equals("captcha")) obj = App.getGson().fromJson(jsonObj, ClientCaptcha.class);
-                if (type.equals("admin_cdoverride")) obj = App.getGson().fromJson(jsonObj, ClientAdminCooldownOverride.class);
+                if (type.equals("admin_placement_overrides")) obj = App.getGson().fromJson(jsonObj, ClientAdminPlacementOverrides.class);
                 if (type.equals("admin_message")) obj = App.getGson().fromJson(jsonObj, ClientAdminMessage.class);
                 if (type.equals("shadowbanme")) obj = App.getGson().fromJson(jsonObj, ClientShadowBanMe.class);
                 if (type.equals("banme")) obj = App.getGson().fromJson(jsonObj, ClientBanMe.class);
