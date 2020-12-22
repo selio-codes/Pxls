@@ -3486,7 +3486,7 @@ window.App = (function() {
           color: '#cf0000'
         }
       ],
-      specialChatColorClasses: ['rainbow', 'donator'],
+      specialChatColorClasses: ['rainbow', 'donator', 'hothot', 'trans'],
       init: function() {
         self.initTitle = document.title;
         self._initThemes();
@@ -3497,6 +3497,13 @@ window.App = (function() {
         self.prettifyRange('input[type=range]');
 
         self.elements.coords.click(() => coords.copyCoords(true));
+
+        if (location.href.includes('auth_invalid=true')) {
+          modal.show(modal.buildDom(
+            crel('h2', { class: 'modal-title' }, 'Error'),
+            crel('p', { style: 'padding: 0; margin: 0;' }, 'Your authentication email must end with "@s.stemk12.org" or "@stemk12.org". Please try again.')
+          ), { closeExisting: false });
+        }
 
         socket.on('alert', (data) => {
           modal.show(modal.buildDom(
@@ -4643,6 +4650,7 @@ window.App = (function() {
         });
 
         // settings
+
         settings.chat.font.size.listen(function(value) {
           if (isNaN(value)) {
             modal.showText('Invalid value. Expected a number between 1 and 72');
@@ -6416,6 +6424,8 @@ window.App = (function() {
       getRoles: () => self.roles,
       isStaff: () => self.hasPermission('user.admin'),
       isDonator: () => self.hasPermission('user.donator'),
+      isHotHot: () => self.hasPermission('user.hothot'),
+      isTrans: () => self.hasPermission('user.trans'),
       getPermissions: () => {
         let perms = [];
         self.roles.flatMap(function loop(node) {
@@ -6460,13 +6470,21 @@ window.App = (function() {
             self.elements.prompt.fadeOut(200);
           });
 
+          const authServices = data.authServices;
+          authServices.alternate = { id: 'defaultAuth', name: 'Alternate Login', registrationEnabled: true };
+
           self.elements.prompt[0].innerHTML = '';
           crel(self.elements.prompt[0],
             crel('div', { class: 'content' },
               crel('h1', 'Sign in with...'),
               crel('ul',
-                Object.values(data.authServices).map(service => {
-                  const anchor = crel('a', { href: `/signin/${service.id}?redirect=1` }, service.name);
+                Object.values(authServices).map(service => {
+                  let anchor;
+                  if (service.id === 'defaultAuth') {
+                    anchor = crel('a', { href: `/${service.id}?redirect=1` }, service.name);
+                  } else {
+                    anchor = crel('a', { href: `/signin/${service.id}?redirect=1` }, service.name);
+                  }
                   anchor.addEventListener('click', function(e) {
                     if (window.open(this.href, '_blank')) {
                       e.preventDefault();
@@ -6754,6 +6772,8 @@ window.App = (function() {
       getRoles: self.getRoles,
       isStaff: self.isStaff,
       isDonator: self.isDonator,
+      isHotHot: self.isHotHot,
+      isTrans: self.isTrans,
       getPermissions: self.getPermissions,
       hasPermission: self.hasPermission,
       getUsername: self.getUsername,
@@ -7034,6 +7054,14 @@ window.App = (function() {
   // and here we finally go...
   board.start();
 
+  window.addEventListener('load', function () {
+    if (window.location.href.includes('template') && !navigator.userAgent.includes('Electron') && !window.location.href.includes('electron=false')) {
+      const location = window.location.href + '&electron=false';
+      setTimeout(function () { window.location.replace(location); }, 25);
+      window.location = 'stemplace:/' + window.location.href.split(window.location.host)[1];
+    }
+  });
+
   window.TH = window.TH || TH;
 
   return {
@@ -7118,6 +7146,8 @@ window.App = (function() {
       isLoggedIn: user.isLoggedIn,
       isStaff: user.isStaff,
       isDonator: user.isDonator,
+      isHotHot: user.isHotHot,
+      isTrans: user.isTrans,
       getPermissions: user.getPermissions,
       hasPermission: user.hasPermission
     },
